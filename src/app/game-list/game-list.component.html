@@ -1,0 +1,13 @@
+<p>game-list works!</p>
+<!--<div class='sidenav'>-->
+<!--    <span (click)='newGame()'>New Game</span>-->
+<!--</div>-->
+
+<div class='sidenav'>
+    <span (click)='newGame()'
+          data-test="btn-new-game">New Game</span>
+    <span [class.selected]='gameId === currentGameId'
+          (click)='loadGame(gameId)'
+          *ngFor='let gameId of games$ | async'>{{ gameId }}
+    </span>
+</div>

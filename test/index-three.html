@@ -1,0 +1,25 @@
+<div>
+    https://www.cypress.io/blog/2020/02/12/working-with-iframes-in-cypress/
+</div>
+
+<html>
+<head>
+    <style>
+        body {
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+    </style>
+</head>
+<body>
+<iframe src="http://localhost:4200/"
+        data-cy="game-one" frameborder="0"
+        style="width: 32%; float: left; height: 100vh"></iframe>
+<iframe src="http://localhost:4200/"
+        data-cy="game-two" frameborder="0"
+        style="width: 32%; height: 100vh"></iframe>
+<iframe src="http://localhost:4200/"
+        data-cy="game-three" frameborder="0"
+        style="width: 32%; height: 100vh"></iframe>
+</body>
+</html>
