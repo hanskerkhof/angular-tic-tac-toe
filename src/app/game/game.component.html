@@ -2,7 +2,8 @@
     <label for="playerName">Enter your name: </label>
     <input id="playerName" type="text" (keyup)="setPlayerName($event)" placeholder="Enter your name..."/>
     <button (click)="joinGame()"
-    data-test="btn-join-game">Join game</button>
+    data-test="btn-join-game"
+    class="btn">Join game</button>
 
     <div class="players">
         <label>Players: ({{game[gameId].players.length}})</label>

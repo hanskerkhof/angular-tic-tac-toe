@@ -7,7 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('backend:server');
 var http = require('http');
-const { nanoid } = require('nanoid')
+const {nanoid} = require('nanoid')
 
 const games = {};
 
@@ -46,11 +46,9 @@ io.on('connection', socket => {
     const sessionID = socket.id;
     console.log('connected', sessionID)
 
-
     // send the updated games to all clients (broadcast)
-    console.log('games', games);
+    // console.log('games', games);
     io.emit('games', Object.keys(games));
-
 
     let previousId;
 
@@ -101,18 +99,18 @@ io.on('connection', socket => {
         const newGame = {};
         newGame[gameId] = games[gameId];
 
-        console.log('game', newGame);
+        // console.log('game', newGame);
         socket.emit('game', newGame);
 
         // send the updated games to all clients (broadcast)
-        console.log('games', games);
+        // console.log('games', games);
         const max = 10;
         if (Object.keys(games).length > max) {
-            console.log('truncate games');
+            // console.log('truncate games');
             Object.keys(games).reverse().forEach((val, index) => {
-                console.log(index, val);
+                // console.log(index, val);
                 if (index > max) {
-                    console.log('delete', val);
+                    // console.log('delete', val);
                     delete games[val];
                 }
             })
@@ -121,7 +119,7 @@ io.on('connection', socket => {
     });
 
     socket.on('joinGame', (event) => {
-        console.log('----- joinGame');
+        // console.log('----- joinGame');
         // only add up to 2 players
         if (games[event.gameId].players.length < 2) {
             games[event.gameId].players.push(event.playerName);
@@ -133,14 +131,14 @@ io.on('connection', socket => {
         if (games[event.gameId].turn === null) {
             games[event.gameId].turn = event.playerName
         }
-        console.log('game', event.gameId, newGame);
+        // console.log('game', event.gameId, newGame);
         // socket.emit('game', newGame);
         // TODO maintain 2 sockets
         io.emit('game', newGame);
     });
 
     socket.on('playGame', (event) => {
-        console.log('playGame', event);
+        // console.log('playGame', event);
         const gameId = event.gameId;
         const playerName = event.playerName;
         const positionX = event.x;
@@ -164,7 +162,7 @@ io.on('connection', socket => {
             // send new game info`
             const newGame = {};
             newGame[event.gameId] = games[event.gameId];
-            console.log('game', newGame);
+            // console.log('game', newGame);
             // socket.emit('game', newGame);
             // TODO maintain 2 sockets
             io.emit('game', newGame);
@@ -233,3 +231,4 @@ function onListening() {
         : 'port ' + addr.port;
     debug('Listening on ' + bind);
 }
+
