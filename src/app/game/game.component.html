@@ -1,5 +1,5 @@
 <div *ngIf="game" class="game-area">
-    <form data-test="player-name-form" *ngIf="!game[gameId].players.includes(currentPlayerName)">
+    <form data-test="player-name-form" *ngIf="!game[gameId].players.includes(currentPlayerName) && game[gameId].players.length < 2">
         <label for="playerName">Enter your name: </label>
         <input id="playerName"
                type="text"
@@ -29,24 +29,20 @@
 
     <div class="game-result">
         <div id="winner" *ngIf="game[gameId].winner">
-                <span>
-                    <img *ngIf="game[gameId].players.indexOf(game[gameId].winner) === 0" src="assets/nought.png">
-                    <img *ngIf="game[gameId].players.indexOf(game[gameId].winner) === 1" src="assets/cross.png">
-                </span>
+            <img *ngIf="game[gameId].players.indexOf(game[gameId].winner) === 0" src="assets/nought.png">
+            <img *ngIf="game[gameId].players.indexOf(game[gameId].winner) === 1" src="assets/cross.png">
             {{ game[gameId].winner }} wins!
         </div>
         <div id="draw" *ngIf="game[gameId].draw">
-                    <img src="assets/cross.png">
-                    <img src="assets/nought.png">
+            <img src="assets/cross.png">
+            <img src="assets/nought.png">
             It's a draw!
         </div>
     </div>
 
-    <div *ngIf="game[gameId].players.length === 0">WAITING FOR PLAYERS TO JOIN</div>
-    <div *ngIf="game[gameId].players.length === 1">WAITING FOR PLAYER TO JOIN</div>
-
     <div id="game-board">
-        <div *ngIf="currentPlayerName !== game[gameId].turn && game[gameId].players.length === 2" class="game-board-overlay"></div>
+        <div *ngIf="currentPlayerName !== game[gameId].turn || game[gameId].players.length !== 2"
+             class="game-board-overlay"></div>
         <div *ngFor="let row of game[gameId].state; let x = index" class="game-row">
             <div *ngFor="let col of row; let y = index"
                  [attr.data-test]="x + '-' + y"
@@ -66,5 +62,10 @@
     </div>
     <div id="moves">{{ game[gameId].moves }} moves</div>
 
+    <div class="game-messages">
+        <div *ngIf="game[gameId].players.length === 0">WAITING FOR PLAYERS TO JOIN</div>
+        <div *ngIf="game[gameId].players.length === 1">WAITING FOR PLAYER TO JOIN</div>
+        <div *ngIf="!game[gameId].players.includes(currentPlayerName) && game[gameId].players.length === 2">SPECTATING THE GAME</div>
+    </div>
     <!--    <pre id="debug">{{game | json}}</pre>-->
 </div>

@@ -1,6 +1,5 @@
 # AngularTicTacToe
 
-[https://saperium.com/articles/tic-tac-toe-with-angular-and-socket-io](https://saperium.com/articles/tic-tac-toe-with-angular-and-socket-io)
 
 
 Create the express app

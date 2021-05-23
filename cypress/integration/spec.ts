@@ -75,10 +75,9 @@ it('Game win player two', () => {
         .find('img')
         .should('have.attr', 'src')
         .should('include','cross');
-
 });
 
-it.only('Game draw', () => {
+it('Game draw', () => {
     play2PlayerScenario(['0-0', '1-1', '0-1', '0-2', '2-0', '1-0', '1-2', '2-2', '2-1']);
     getIframeBody('game-one').find('#draw').should('contain', 'It\'s a draw!');
 });

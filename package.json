@@ -1,6 +1,6 @@
 {
   "name": "angular-tic-tac-toe",
-  "version": "0.0.4",
+  "version": "0.0.7",
   "scripts": {
     "cy:open": "rimraf cypress/results/* && run-p -r start-http-server cy:open:wait",
     "cy:open:wait": "npx wait-on -i 2000 http://127.0.0.1:8080 && cypress open",
@@ -39,7 +39,7 @@
     "@angular/compiler-cli": "~12.0.1",
     "@briebug/cypress-schematic": "^5.0.0",
     "@types/jasmine": "~3.6.0",
-    "@types/node": "^12.11.1",
+    "@types/node": "^12.20.13",
     "cypress": "7.3.0",
     "cypress-mochawesome-reporter": "^2.0.1",
     "http-server": "^0.12.3",

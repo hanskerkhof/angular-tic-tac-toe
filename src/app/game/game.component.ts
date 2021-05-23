@@ -23,7 +23,7 @@ export class GameComponent implements OnInit, OnDestroy {
     game!: Game;
     gameId!: string;
     _gameSub!: Subscription;
-    currentPlayerName!: string;
+    currentPlayerName: string = '';
 
     constructor(private gameService: GameService) {
     }
