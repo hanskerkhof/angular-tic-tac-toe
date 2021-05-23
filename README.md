@@ -79,19 +79,19 @@ https://docs.docker.com/cloud/aci-integration/
     
 create
 
-    heroku create --region eu
+    heroku create --region eu  tic-tac-toe-95772
     
-    Creating app... done, ⬢ afternoon-escarpment-95772, region is eu
-    https://afternoon-escarpment-95772.herokuapp.com/ | https://git.heroku.com/afternoon-escarpment-95772.git
+    Creating ⬢ tic-tac-toe-95772... done, region is eu
+    https://tic-tac-toe-95772.herokuapp.com/ | https://git.heroku.com/tic-tac-toe-95772.git
 
 Howto
 
 https://devcenter.heroku.com/articles/git
 
 
-    heroku git:remote -a afternoon-escarpment-95772
+    heroku git:remote -a tic-tac-toe-95772
 
-    set git remote heroku to https://git.heroku.com/afternoon-escarpment-95772.git
+    set git remote heroku to https://git.heroku.com/tic-tac-toe-95772.git
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.0.1.
 

@@ -43,25 +43,42 @@ before(() => {
 beforeEach(() => {
     // setup game
     ['game-one', 'game-two'].forEach((gameId, idx) => {
-        if (idx===0) {
+        if (idx === 0) {
             getIframeBody(gameId).find('[data-test=btn-new-game]').should('have.text', 'New Game').click()
         }
-        getIframeBody(gameId).find('#playerName').clear().type('player ' + gameId);
-        getIframeBody(gameId).find('[data-test=btn-join-game]').should('have.text', 'Join game').click()
+        getIframeBody(gameId).find('#playerName').clear().type('' + gameId);
+        getIframeBody(gameId).find('[data-test=btn-join-game]').should('contain', 'Join game').click()
     })
 })
 
 it('Game win player one', () => {
     play2PlayerScenario(['0-0', '0-1', '1-0', '1-1', '2-0']);
-    getIframeBody('game-one').find('#winner').should('have.text', 'player game-one wins!');
+    getIframeBody('game-one').find('#winner').should('contain', 'game-one wins!');
+    getIframeBody('game-one').find('#winner')
+        .find('img')
+        .should('have.attr', 'src')
+        .should('include','nought');
+    getIframeBody('game-two').find('#winner')
+        .find('img')
+        .should('have.attr', 'src')
+        .should('include','nought');
 });
 
 it('Game win player two', () => {
     play2PlayerScenario(['0-1', '0-0', '2-1', '1-1', '2-0', '2-2']);
-    getIframeBody('game-two').find('#winner').should('have.text', 'player game-two wins!');
+    getIframeBody('game-two').find('#winner').should('contain', 'game-two wins!');
+    getIframeBody('game-one').find('#winner')
+        .find('img')
+        .should('have.attr', 'src')
+        .should('include','cross');
+    getIframeBody('game-two').find('#winner')
+        .find('img')
+        .should('have.attr', 'src')
+        .should('include','cross');
+
 });
 
-it('Game draw', () => {
+it.only('Game draw', () => {
     play2PlayerScenario(['0-0', '1-1', '0-1', '0-2', '2-0', '1-0', '1-2', '2-2', '2-1']);
-    getIframeBody('game-one').find('#draw').should('have.text', 'It\'s a draw');
+    getIframeBody('game-one').find('#draw').should('contain', 'It\'s a draw!');
 });

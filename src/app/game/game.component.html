@@ -1,59 +1,70 @@
 <div *ngIf="game" class="game-area">
-    <label for="playerName">Enter your name: </label>
-    <input id="playerName"
-           type="text"
-           [value]="currentPlayerName"
-           (keyup)="setPlayerName($event)"
-           placeholder="Enter your name..."/>
-    <button (click)="joinGame()"
-    data-test="btn-join-game">Join game</button>
+    <form data-test="player-name-form" *ngIf="!game[gameId].players.includes(currentPlayerName)">
+        <label for="playerName">Enter your name: </label>
+        <input id="playerName"
+               type="text"
+               [maxLength]="12"
+               [value]="currentPlayerName"
+               (keyup)="setPlayerName($event)"
+               placeholder="Enter your name...">
+        <br>
+        <button type="button" (click)="joinGame()"
+                data-test="btn-join-game">Join game
+        </button>
+    </form>
 
     <div class="players">
         <label>Players: ({{game[gameId].players.length}})</label>
-        <div *ngFor="let playerName of game[gameId].players; let idx = index"
-        [attr.data-test]="'player-name-' + idx">
-            {{playerName}} <span *ngIf="idx === 0">O</span> <span *ngIf="idx === 1">X</span>
-            <span *ngIf="game[gameId].turn === playerName"> <-
+        <ul>
+            <li class="player" *ngFor="let playerName of game[gameId].players; let idx = index"
+                [attr.data-test]="'player-name-' + idx">
+                <span *ngIf="idx === 0">O</span> <span *ngIf="idx === 1">X</span> {{playerName}}
+                <span *ngIf="game[gameId].turn === playerName"> <-
                <ng-container *ngIf="currentPlayerName === playerName"> YOUR </ng-container>
                 TURN
             </span>
-        </div>
-
-        <div id="moves">{{ game[gameId].moves }} moves</div>
-
-        <div id="winner" *ngIf="winner">{{ winner }} wins!</div>
-
-        <div id="draw" *ngIf="draw">It's a draw</div>
-
-        <div *ngIf="game[gameId].players.length === 0">WAITING FOR PLAYERS TO JOIN</div>
-        <div *ngIf="game[gameId].players.length === 1">WAITING FOR PLAYER TO JOIN</div>
-
-        <div id="game-board">
-            <ng-container *ngIf="currentPlayerName === game[gameId].turn && !winner">
-                <div *ngFor="let row of game[gameId].state; let x = index" class="game-row">
-                    <div *ngFor="let col of row; let y = index"
-                         [attr.data-test]="x + '-' + y"
-                         class="tile"
-                         style="cursor: pointer"
-                         (click)="playGame(x, y)">
-                        {{ col === 0 ? '' : (col === 1 ? 'O' : 'X') }}
-                    </div>
-
-                </div>
-            </ng-container>
-
-            <ng-container *ngIf="currentPlayerName !== game[gameId].turn || winner">
-                <div *ngFor="let row of game[gameId].state; let x = index" class="game-row">
-                    <div *ngFor="let col of row; let y = index"
-                         class="tile" style="background-color: #818181">
-                        {{ col === 0 ? '' : (col === 1 ? 'O' : 'X') }}
-                    </div>
-
-                    <br/>
-                </div>
-            </ng-container>
-        </div>
-
-        <pre id="debug">{{game | json}}</pre>
+            </li>
+        </ul>
     </div>
+
+    <div class="game-result">
+        <div id="winner" *ngIf="game[gameId].winner">
+                <span>
+                    <img *ngIf="game[gameId].players.indexOf(game[gameId].winner) === 0" src="assets/nought.png">
+                    <img *ngIf="game[gameId].players.indexOf(game[gameId].winner) === 1" src="assets/cross.png">
+                </span>
+            {{ game[gameId].winner }} wins!
+        </div>
+        <div id="draw" *ngIf="game[gameId].draw">
+                    <img src="assets/cross.png">
+                    <img src="assets/nought.png">
+            It's a draw!
+        </div>
+    </div>
+
+    <div *ngIf="game[gameId].players.length === 0">WAITING FOR PLAYERS TO JOIN</div>
+    <div *ngIf="game[gameId].players.length === 1">WAITING FOR PLAYER TO JOIN</div>
+
+    <div id="game-board">
+        <div *ngIf="currentPlayerName !== game[gameId].turn && game[gameId].players.length === 2" class="game-board-overlay"></div>
+        <div *ngFor="let row of game[gameId].state; let x = index" class="game-row">
+            <div *ngFor="let col of row; let y = index"
+                 [attr.data-test]="x + '-' + y"
+                 class="tile"
+                 style="cursor: pointer"
+                 (click)="playGame(x, y)"
+                 [ngClass]="
+                         {
+                         'tile-bg-nought': col === 1,
+                         'tile-bg-cross': col === -1
+                         }">
+                <!--                        {{ col === 0 ? '' : (col === 1 ? 'O' : 'X') }}-->
+            </div>
+
+        </div>
+
+    </div>
+    <div id="moves">{{ game[gameId].moves }} moves</div>
+
+    <!--    <pre id="debug">{{game | json}}</pre>-->
 </div>
