@@ -36,6 +36,25 @@ TODO
 > Inspiration: https://dev.to/bornasepic/pure-and-simple-tic-tac-toe-with-javascript-4pgn 
 > https://www.thatsoftwaredude.com/content/6189/coding-tic-tac-toe-in-javascript
 
+## Tailwind css
+
+> https://tailwindcss.com/docs/installation
+
+https://dev.to/angular/setup-tailwindcss-in-angular-the-easy-way-1i5l
+
+    npm install @tailwindcss/forms 
+    npm install @tailwindcss/typography
+
+in tailwind.config.js
+
+    ...
+    plugins: [
+        require('@tailwindcss/forms'),
+        require('@tailwindcss/typography'),
+    ],
+    ...
+
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.0.1.
 
 ## Development server
