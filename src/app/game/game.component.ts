@@ -29,6 +29,16 @@ export class GameComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+        const playerName = localStorage.getItem('playerName');
+        // console.log(localStorage.getItem('playerName'));
+        // console.log(typeof localStorage.getItem('playerName'));
+        // if(localStorage.getItem('playerName')){
+             this.currentPlayerName = playerName ? playerName : '';
+        // }
+
+
+        console.log(this.currentPlayerName);
+
         this._gameSub = this.gameService.currentGame$.subscribe(game => {
             console.log('currentGame$', game);
             this.game = game;
@@ -57,10 +67,13 @@ export class GameComponent implements OnInit, OnDestroy {
     }
 
     setPlayerName(event: any): void {
-        console.log(event);
+        // console.log(event);
+
         if(this.game[this.gameId].players.includes(event.target.value)) {
             console.log('PLAYER NAME ALREADY TAKEN');
+            return;
         }
+        localStorage.setItem('playerName', event.target.value);
         this.currentPlayerName = event.target.value;
     }
 
