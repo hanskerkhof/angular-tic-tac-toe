@@ -36,6 +36,14 @@ TODO
 > Inspiration: https://dev.to/bornasepic/pure-and-simple-tic-tac-toe-with-javascript-4pgn 
 > https://www.thatsoftwaredude.com/content/6189/coding-tic-tac-toe-in-javascript
 
+## gh-pages
+
+https://www.npmjs.com/package/angular-cli-ghpages
+
+### Investigate
+https://blog.logrocket.com/free-services-deploy-node-js-app/
+
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.0.1.
 
 ## Development server

@@ -1,6 +1,6 @@
 {
   "name": "angular-tic-tac-toe",
-  "version": "0.0.0",
+  "version": "0.0.4",
   "scripts": {
     "cy:open": "rimraf cypress/results/* && run-p -r start-http-server cy:open:wait",
     "cy:open:wait": "npx wait-on -i 2000 http://127.0.0.1:8080 && cypress open",
@@ -13,7 +13,8 @@
     "start-all": "run-p -r start start-backend",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "deploy-gh-pages": "npm --no-git-tag-version version patch && ng build --base-href=https://hanskerkhof.github.io/angular-tic-tac-toe/ && ng deploy --no-build --no-silent --name='CI/CD' --email='info@netmatic.nl' --message='[ci skip] deploy-gh-pages\n\nSkip this commit on CircleCi' && echo 'https://hanskerkhof.github.io/angular-tic-tac-toe/' && npm version"
   },
   "private": true,
   "dependencies": {
@@ -25,6 +26,7 @@
     "@angular/platform-browser": "~12.0.1",
     "@angular/platform-browser-dynamic": "~12.0.1",
     "@angular/router": "~12.0.1",
+    "angular-cli-ghpages": "^1.0.0-rc.1",
     "ngx-socket-io": "^4.0.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.1.0",
