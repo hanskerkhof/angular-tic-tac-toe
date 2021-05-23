@@ -1,6 +1,5 @@
 const getIframeDocument = (id) => {
-    return cy
-        .get('iframe[data-cy="' + id + '"]')
+    return cy.get('iframe[data-cy="' + id + '"]')
         // Cypress yields jQuery element, which has the real
         // DOM element under property "0".
         // From the real DOM iframe element we can get
@@ -41,6 +40,7 @@ before(() => {
 });
 
 beforeEach(() => {
+    cy.viewport(1600, 900);
     // setup game
     ['game-one', 'game-two'].forEach((gameId, idx) => {
         if (idx === 0) {

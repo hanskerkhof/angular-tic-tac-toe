@@ -64,11 +64,11 @@ $game-board-size: 220px;
 }
 
 .tile-bg-cross {
-  background: url('/assets/cross.png') no-repeat center;
+  background: url('../../assets/cross.png') no-repeat center;
   background-size: (round($game-board-size / 3) - 10px) (round($game-board-size / 3) - 10px);
 }
 
 .tile-bg-nought {
-  background: url('/assets/nought.png') no-repeat center;
+  background: url('../../assets/nought.png') no-repeat center;
   background-size: (round($game-board-size / 3) - 10px) (round($game-board-size / 3) - 10px);
 }
