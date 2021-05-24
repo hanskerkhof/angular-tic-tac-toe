@@ -56,8 +56,8 @@
                  (click)="playGame(x, y)"
                  [ngClass]="
                          {
-                         'tile-bg-nought': col === 1,
-                         'tile-bg-cross': col === -1
+                         'tile-bg-nought': col === -1,
+                         'tile-bg-cross': col === 1
                          }">
                 <!--                        {{ col === 0 ? '' : (col === 1 ? 'O' : 'X') }}-->
             </div>
