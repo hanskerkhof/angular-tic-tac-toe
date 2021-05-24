@@ -4,9 +4,9 @@
  * Module dependencies.
  */
 
-var app = require('../app');
-var debug = require('debug')('backend:server');
-var http = require('http');
+const app = require('../app');
+const debug = require('debug')('backend:server');
+const http = require('http');
 const { nanoid } = require('nanoid');
 const version = require('../package.json').version;
 
@@ -23,7 +23,7 @@ app.set('port', port);
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
+const server = http.createServer(app);
 
 // Set up sockets
 const socket = require('socket.io');
@@ -110,7 +110,7 @@ io.on('connection', socket => {
         // console.log('games', games);
         const max = 11;
         if (Object.keys(games).length >= max) {
-            console.log('truncate games');
+            // console.log('truncate games');
             Object.keys(games).reverse().forEach((val, index) => {
                 // console.log(index, val);
                 if (index > max) {
@@ -187,7 +187,7 @@ io.on('connection', socket => {
 });
 
 function calculateWinner(game) {
-    console.log('calculateWinnerOrDraw', game);
+    // console.log('calculateWinner', game);
     const state = game.state;
     let winIndex = null;
     let winner = null;

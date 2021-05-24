@@ -1,4 +1,9 @@
-<div class="flex">
+<div class="flex relative">
+    <div *ngIf="!connected" class="bg-black opacity-50 text-gray-700 absolute h-screen w-screen"></div>
     <app-game-list class="mt-4 ml-1"></app-game-list>
     <app-game class="ml-4"></app-game>
 </div>
+
+<footer class="bg-gray-300 text-gray-700 text-center text-7 absolute bottom-0 left-0 w-screen">
+    {{title}} - v{{environment.appVersion}} / v{{environment.backendVersion}}
+</footer>

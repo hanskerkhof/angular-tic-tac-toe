@@ -1,6 +1,6 @@
 {
   "name": "backend",
-  "version": "0.0.6",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
@@ -17,5 +17,8 @@
     "nanoid": "^3.1.23",
     "shortid": "^2.2.16",
     "socket.io": "^4.1.2"
+  },
+  "devDependencies": {
+    "express-reload": "^1.2.0"
   }
 }

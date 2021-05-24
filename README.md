@@ -62,10 +62,12 @@ In postcss.config.js
 
 ## gh-pages
 
-https://www.npmjs.com/package/angular-cli-ghpages
+- https://github.com/ngneat/hot-toast
+- https://ngneat.github.io/hot-toast/#examples
+## hot-toast
 
-### Investigate
-https://blog.logrocket.com/free-services-deploy-node-js-app/
+https://ngneat.github.io/hot-toast/#examples
+
 
 ### Docker
 

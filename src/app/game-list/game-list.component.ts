@@ -1,41 +1,42 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Observable, Subscription} from 'rxjs';
 import {GameService} from '../game.service';
-import { environment } from '../../environments/environment';
+import {HotToastService} from "@ngneat/hot-toast";
+import {takeUntil} from "rxjs/operators";
+import {BaseComponent} from "../base-component";
 
 @Component({
     selector: 'app-game-list',
     templateUrl: './game-list.component.html',
     styleUrls: ['./game-list.component.scss']
 })
-export class GameListComponent implements OnInit, OnDestroy {
+export class GameListComponent extends BaseComponent implements OnInit, OnDestroy {
     games$!: Observable<string[]>;
     currentGameId: string = '';
-    _gameSub!: Subscription;
-    public environment = environment;
 
 
-    constructor(private gameService: GameService) {
+    constructor(
+        private gameService: GameService,
+        private toast: HotToastService
+    ) {
+        super();
         this.games$ = this.gameService.games$;
     }
 
     ngOnInit(): void {
-        this._gameSub = this.gameService.currentGame$.subscribe(game => {
-            // console.log('currentGame', game);
+        this.gameService.currentGame$.pipe(takeUntil(this.destroyer$))
+            .subscribe(game => {
             this.currentGameId = Object.keys(game)[0];
         });
 
-        this.gameService.games$.subscribe( games => {
+        this.gameService.games$.subscribe(games => {
             console.log(games);
         })
     }
 
-    ngOnDestroy(): void {
-        this._gameSub.unsubscribe();
-    }
-
     newGame(): void {
         this.gameService.newGame();
+        this.toast.success('Game created');
     }
 
     loadGame(gameId: string): void {
