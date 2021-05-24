@@ -1,12 +1,13 @@
-<div class='sidenav'>
-    <span (click)='newGame()'
-          data-test="btn-new-game">New Game</span>
-    <span [class.selected]='gameId === currentGameId'
+<div class="text-center">
+    <button (click)='newGame()'
+            class="btn mb-3"
+          data-test="btn-new-game">New Game</button>
+
+    <div class="NOPbg-gray-500 cursor-pointer hover:bg-gray-200 text-center rounded-md p-1 m-1"
+            [class.bg-green-300]='gameId === currentGameId'
+         [ngClass]="{'hover:bg-green-500': gameId === currentGameId}"
           (click)='loadGame(gameId)'
           *ngFor='let gameId of games$ | async'>{{ gameId }}
-    </span>
+    </div>
 
-    <div style="position: absolute; display: flex; align-content: center; justify-content: center; padding: 3px;
-     bottom: 20px; width: 100%; z-index: 9000; background-color: darkgray;">
-        v{{environment.appVersion}} - v{{environment.backendVersion}}</div>
 </div>

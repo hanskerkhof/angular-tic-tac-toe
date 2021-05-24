@@ -108,7 +108,7 @@ io.on('connection', socket => {
 
         // send the updated games to all clients (broadcast)
         // console.log('games', games);
-        const max = 10;
+        const max = 11;
         if (Object.keys(games).length >= max) {
             console.log('truncate games');
             Object.keys(games).reverse().forEach((val, index) => {

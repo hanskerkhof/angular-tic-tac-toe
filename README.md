@@ -51,6 +51,15 @@ in tailwind.config.js
     ],
     ...
 
+In postcss.config.js
+
+    module.exports = {
+        plugins: {
+            tailwindcss: { config: 'apps/<app-name>/tailwind.config.js' },
+            autoprefixer: {},
+        },
+    }
+
 ## gh-pages
 
 https://www.npmjs.com/package/angular-cli-ghpages

@@ -1,50 +1,20 @@
-<div *ngIf="game" class="game-area">
-<!--<<<<<<< HEAD-->
-
-<!--        <form class="block border p-2" style="width: 200px;">-->
-<!--            &lt;!&ndash;        <div class="mt-4 max-w-md">&ndash;&gt;-->
-<!--            &lt;!&ndash;            <div class="grid grid-cols-1 gap-3">&ndash;&gt;-->
-<!--            <label class="block my-2">-->
-<!--                <span class="text-gray-700">Your name</span>-->
-<!--                <input type="text"-->
-<!--                       id="playerName"-->
-<!--                       (keyup)="setPlayerName($event)"-->
-<!--                       class="mt-1 block w-full" placeholder="Enter your name...">-->
-<!--            </label>-->
-<!--            &lt;!&ndash;            </div>&ndash;&gt;-->
-<!--            &lt;!&ndash;        </div>&ndash;&gt;-->
-
-<!--&lt;!&ndash;            <label for="playerName">Enter your name: </label>&ndash;&gt;-->
-<!--&lt;!&ndash;            <input id="playerName" type="text" (keyup)="setPlayerName($event)" placeholder="Enter your name..."/>&ndash;&gt;-->
-<!--            <button type="button"-->
-<!--                    (click)="joinGame()"-->
-<!--                    data-test="btn-join-game"-->
-<!--                    class="btn">Join game-->
-<!--            </button>-->
-<!--        </form>-->
-
-<!--    <div class="players">-->
-<!--        <label>Players: ({{game[gameId].players.length}})</label>-->
-<!--        <div *ngFor="let playerName of game[gameId].players; let idx = index"-->
-<!--             [attr.data-test]="'player-name-' + idx">-->
-<!--            {{playerName}} <span *ngIf="idx === 0">O</span> <span *ngIf="idx === 1">X</span>-->
-<!--            <span *ngIf="game[gameId].turn === playerName"> <- -->
-<!--=======-->
-
-    <form data-test="player-name-form" *ngIf="!game[gameId].players.includes(currentPlayerName) && game[gameId].players.length < 2">
+<div *ngIf="game" class="game-area mt-4">
+    <form data-test="player-name-form"
+          *ngIf="!game[gameId].players.includes(currentPlayerName) && game[gameId].players.length < 2">
         <label for="playerName">Enter your name: </label>
         <input id="playerName"
                type="text"
                [maxLength]="12"
                [value]="currentPlayerName"
                (keyup)="setPlayerName($event)"
+               class="mb-2"
                placeholder="Enter your name...">
         <br>
         <button id="btn-join"
                 type="button" (click)="joinGame()"
                 data-test="btn-join-game"
                 [disabled]="!currentPlayerName"
-        class="disabled:opacity-50">Join game
+                class="mb-2 disabled:opacity-50">Join game
         </button>
     </form>
 
@@ -100,7 +70,9 @@
     <div class="game-messages">
         <div *ngIf="game[gameId].players.length === 0">WAITING FOR PLAYERS TO JOIN</div>
         <div *ngIf="game[gameId].players.length === 1">WAITING FOR PLAYER TO JOIN</div>
-        <div *ngIf="!game[gameId].players.includes(currentPlayerName) && game[gameId].players.length === 2">SPECTATING THE GAME</div>
+        <div *ngIf="!game[gameId].players.includes(currentPlayerName) && game[gameId].players.length === 2">SPECTATING
+            THE GAME
+        </div>
     </div>
     <!--    <pre id="debug">{{game | json}}</pre>-->
 </div>

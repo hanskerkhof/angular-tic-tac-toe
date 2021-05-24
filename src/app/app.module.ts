@@ -9,6 +9,7 @@ import { GameListComponent } from './game-list/game-list.component';
 import { GameComponent } from './game/game.component';
 
 import {environment} from "../environments/environment";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 const config: SocketIoConfig = { url: environment.SOCKET_ENDPOINT, options: {} };
 
@@ -22,6 +23,7 @@ const config: SocketIoConfig = { url: environment.SOCKET_ENDPOINT, options: {} }
     BrowserModule,
     AppRoutingModule,
     SocketIoModule.forRoot(config),
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
