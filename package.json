@@ -19,7 +19,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "deploy-gh-pages": "npm --no-git-tag-version version patch && ng build --base-href=https://hanskerkhof.github.io/angular-tic-tac-toe/ && ng deploy --no-build --no-silent --name='CI/CD' --email='info@netmatic.nl' --message='[ci skip] deploy-gh-pages\n\nSkip this commit on CircleCi' && echo 'https://hanskerkhof.github.io/angular-tic-tac-toe/' && npm version",
-    "deploy-heroku": "heroku git:remote -a tic-tac-toe-95772 && git remote --verbose && git subtree push --prefix backend heroku master"
+    "deploy-heroku": "cd backend && npm --no-git-tag-version version patch && cd .. && heroku git:remote -a tic-tac-toe-95772 && git remote --verbose && git subtree push --prefix backend heroku master"
   },
   "private": true,
   "dependencies": {

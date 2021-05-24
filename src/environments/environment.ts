@@ -8,6 +8,7 @@ export const environment = {
   SOCKET_ENDPOINT: 'http://localhost:3000',
   SOCKET_ENABLED: true,
   appVersion: require('../../package.json').version,
+  backendVersion: require('../../backend/package.json').version,
 };
 
 /*

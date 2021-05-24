@@ -8,6 +8,7 @@ var app = require('../app');
 var debug = require('debug')('backend:server');
 var http = require('http');
 const { nanoid } = require('nanoid')
+const version = require('../package.json').version
 
 const games = {};
 
@@ -96,7 +97,8 @@ io.on('connection', socket => {
             turn: null,
             winner: null,
             draw: false,
-            moves: 0
+            moves: 0,
+            version: version,
         }
 
         // send the newly created game to the connecting client
