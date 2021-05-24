@@ -1,11 +1,15 @@
 {
   "name": "angular-tic-tac-toe",
-  "version": "0.0.0",
+  "version": "0.0.11",
   "scripts": {
     "cy:open": "rimraf cypress/results/* && run-p -r start-http-server cy:open:wait",
-    "cy:open:wait": "npx wait-on -i 2000 http://127.0.0.1:8080 && cypress open",
-    "cy:run": "rimraf cypress/results/* && run-p -r start start-http-server start-backend cypress:wait:run",
-    "cypress:wait:run": "npx wait-on -i 2000 http-get://localhost:4200/main.js && npx wait-on -i 2000 http://127.0.0.1:8080 && cypress run",
+    "cy:open:remote": "rimraf cypress/results/* && run-p -r start-http-server cy:open:wait:remote",
+    "cy:open:wait": "npx wait-on -i 2000 http://127.0.0.1:8080 && cypress open --env env=local",
+    "cy:open:wait:remote": "npx wait-on -i 2000 http://127.0.0.1:8080 && cypress open --env env=remote",
+    "cy:run": "rimraf cypress/results/* && run-p -r start start-http-server start-backend cypress:run:wait",
+    "cy:run:remote": "rimraf cypress/results/* && run-p -r start-http-server cypress:run:wait:remote",
+    "cypress:run:wait": "npx wait-on -i 2000 http-get://localhost:4200/main.js && npx wait-on -i 2000 http://127.0.0.1:8080 && cypress run",
+    "cypress:run:wait:remote": "cypress run --env env=remote",
     "start-http-server": "npx http-server test",
     "start-backend": "cd backend && npm run start",
     "ng": "ng",
@@ -13,7 +17,9 @@
     "start-all": "run-p -r start start-backend start-http-server",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "deploy-gh-pages": "npm --no-git-tag-version version patch && ng build --base-href=https://hanskerkhof.github.io/angular-tic-tac-toe/ && ng deploy --no-build --no-silent --name='CI/CD' --email='info@netmatic.nl' --message='[ci skip] deploy-gh-pages\n\nSkip this commit on CircleCi' && echo 'https://hanskerkhof.github.io/angular-tic-tac-toe/' && npm version",
+    "deploy-heroku": "cd backend && npm --no-git-tag-version version patch && cd .. && heroku git:remote -a tic-tac-toe-95772 && git remote --verbose && git subtree push --prefix backend heroku master"
   },
   "private": true,
   "dependencies": {
@@ -27,6 +33,7 @@
     "@angular/router": "~12.0.1",
     "@tailwindcss/forms": "^0.3.2",
     "@tailwindcss/typography": "^0.4.0",
+    "angular-cli-ghpages": "^1.0.0-rc.1",
     "ngx-socket-io": "^4.0.0",
     "rxjs": "~6.6.0",
     "tailwindcss": "^2.1.2",
@@ -39,7 +46,7 @@
     "@angular/compiler-cli": "~12.0.1",
     "@briebug/cypress-schematic": "^5.0.0",
     "@types/jasmine": "~3.6.0",
-    "@types/node": "^12.11.1",
+    "@types/node": "^12.20.13",
     "cypress": "7.3.0",
     "cypress-mochawesome-reporter": "^2.0.1",
     "http-server": "^0.12.3",

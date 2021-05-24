@@ -7,7 +7,8 @@
 var app = require('../app');
 var debug = require('debug')('backend:server');
 var http = require('http');
-const {nanoid} = require('nanoid')
+const { nanoid } = require('nanoid');
+const version = require('../package.json').version;
 
 const games = {};
 
@@ -92,7 +93,10 @@ io.on('connection', socket => {
             players: players,
             state: state,
             turn: null,
-            moves: 0
+            winner: null,
+            draw: false,
+            moves: 0,
+            version: version,
         }
 
         // send the newly created game to the connecting client
@@ -105,8 +109,8 @@ io.on('connection', socket => {
         // send the updated games to all clients (broadcast)
         // console.log('games', games);
         const max = 10;
-        if (Object.keys(games).length > max) {
-            // console.log('truncate games');
+        if (Object.keys(games).length >= max) {
+            console.log('truncate games');
             Object.keys(games).reverse().forEach((val, index) => {
                 // console.log(index, val);
                 if (index > max) {
@@ -159,6 +163,17 @@ io.on('connection', socket => {
                 games[gameId].moves++;
             }
 
+            games[gameId].winner = calculateWinner(games[gameId]);
+
+            if(games[gameId].winner) {
+                games[gameId].turn = null;
+            }
+
+            if(games[gameId].moves >= 9 && !games[gameId].winner) {
+                games[gameId].draw = true;
+                games[gameId].turn = null;
+            }
+
             // send new game info`
             const newGame = {};
             newGame[event.gameId] = games[event.gameId];
@@ -171,6 +186,52 @@ io.on('connection', socket => {
 
 });
 
+function calculateWinner(game) {
+    console.log('calculateWinnerOrDraw', game);
+    const state = game.state;
+    let winIndex = null;
+    let winner = null;
+
+    if (state[0][0]!==0 && state[0][0]===state[0][1] && state[0][1]===state[0][2]) {
+        winIndex = [0, 0];
+    }
+    if (state[1][0]!==0 && state[1][0]===state[1][1] && state[1][1]===state[1][2]) {
+        winIndex =  [1, 0];
+    }
+    if (state[2][0]!==0 && state[2][0]===state[2][1] && state[2][1]===state[2][2]) {
+        winIndex =  [2, 0];
+    }
+    if (state[0][0]!==0 && state[0][0]===state[1][0] && state[1][0]===state[2][0]) {
+        winIndex =  [0, 0];
+    }
+    if (state[0][1]!==0 && state[0][1]===state[1][1] && state[1][1]===state[2][1]) {
+        winIndex =  [0, 1];
+    }
+    if (state[0][2]!==0 && state[0][2]===state[1][2] && state[1][2]===state[2][2]) {
+        winIndex =  [0, 2];
+    }
+    if (state[0][0]!==0 && state[0][0]===state[1][1] && state[1][1]===state[2][2]) {
+        winIndex =  [0, 0];
+    }
+    if (state[0][2]!==0 && state[0][2]===state[1][1] && state[1][1]===state[2][0]) {
+        winIndex =  [0, 2];
+    }
+
+    // const winIndex = this.checkStateForWin(this.game[this.gameId].state);
+
+    if (winIndex) {
+        if (game.state[winIndex[0]][winIndex[1]]===1) {
+            winner = game.players[0];
+        } else if (game.state[winIndex[0]][winIndex[1]]=== -1) {
+            winner = game.players[1];
+        }
+    } else {
+        winner = null;
+    }
+
+    return winner;
+
+}
 
 /**
  * Normalize a port into a number, string, or false.

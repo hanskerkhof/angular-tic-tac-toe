@@ -1,8 +1,5 @@
 # AngularTicTacToe
 
-[https://saperium.com/articles/tic-tac-toe-with-angular-and-socket-io](https://saperium.com/articles/tic-tac-toe-with-angular-and-socket-io)
-
-
 Create the express app
 
     mkdir backend
@@ -54,6 +51,62 @@ in tailwind.config.js
     ],
     ...
 
+## gh-pages
+
+https://www.npmjs.com/package/angular-cli-ghpages
+
+### Investigate
+https://blog.logrocket.com/free-services-deploy-node-js-app/
+
+### Docker
+
+https://nodejs.org/en/docs/guides/nodejs-docker-webapp/
+    
+    cd backend
+
+    docker build . -t hanskerkhof/angular-tic-tac-toe
+    docker images
+    docker kill tic-tac-toe
+    docker rm tic-tac-toe
+    docker run --name tic-tac-toe -p 3000:3000 -d hanskerkhof/angular-tic-tac-toe
+    
+    # Get container ID
+    docker ps
+
+    # Print app output
+    docker logs tic-tac-toe --follow
+
+If you need to go inside the container you can use the exec command:
+
+    docker exec -it tic-tac-toe /bin/bash
+
+To test your app, get the port of your app that Docker mapped:
+
+    docker ps
+
+    curl -i localhost:3000
+
+https://docs.docker.com/cloud/aci-integration/
+
+## Deploy to heroku
+
+    heroku login
+    
+create
+
+    heroku create --region eu  tic-tac-toe-95772
+    
+    Creating ⬢ tic-tac-toe-95772... done, region is eu
+    https://tic-tac-toe-95772.herokuapp.com/ | https://git.heroku.com/tic-tac-toe-95772.git
+
+Howto
+
+https://devcenter.heroku.com/articles/git
+
+
+    heroku git:remote -a tic-tac-toe-95772
+
+    set git remote heroku to https://git.heroku.com/tic-tac-toe-95772.git
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.0.1.
 

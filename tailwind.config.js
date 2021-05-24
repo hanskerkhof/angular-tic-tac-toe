@@ -821,6 +821,9 @@ module.exports = {
         'disabled',
     ],
     variants: {
+        extend: {
+            opacity: ['disabled'],
+        },
         accessibility: ['responsive', 'focus-within', 'focus'],
         alignContent: ['responsive'],
         alignItems: ['responsive'],

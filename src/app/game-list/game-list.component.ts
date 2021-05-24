@@ -1,6 +1,7 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Observable, Subscription} from 'rxjs';
 import {GameService} from '../game.service';
+import { environment } from '../../environments/environment';
 
 @Component({
     selector: 'app-game-list',
@@ -11,6 +12,8 @@ export class GameListComponent implements OnInit, OnDestroy {
     games$!: Observable<string[]>;
     currentGameId: string = '';
     _gameSub!: Subscription;
+    public environment = environment;
+
 
     constructor(private gameService: GameService) {
         this.games$ = this.gameService.games$;
