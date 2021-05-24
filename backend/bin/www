@@ -60,17 +60,18 @@ io.on('connection', socket => {
         previousId = currentId;
     };
 
-    socket.on('getGame', gameId => {
-        // join room
-        safeJoin(gameId);
-        const newGame = {};
-        newGame[gameId] = games[gameId];
-        // console.log('sending game', newGame);
-        socket.emit('game', newGame);
-    });
+    // socket.on('getGame', gameId => {
+    //     // join room
+    //     safeJoin(gameId);
+    //     const newGame = {};
+    //     newGame[gameId] = games[gameId];
+    //     // console.log('sending game', newGame);
+    //     socket.emit('game', newGame);
+    // });
 
     socket.on('getGame', gameId => {
         const game = {};
+        safeJoin(gameId);
         // set the key as the id and the value as the players and state
         game[gameId] = games[gameId];
         socket.emit('game', game);
