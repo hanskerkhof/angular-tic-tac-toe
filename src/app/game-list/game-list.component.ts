@@ -28,10 +28,6 @@ export class GameListComponent extends BaseComponent implements OnInit, OnDestro
             .subscribe(game => {
             this.currentGameId = Object.keys(game)[0];
         });
-
-        this.gameService.games$.subscribe(games => {
-            console.log(games);
-        })
     }
 
     newGame(): void {

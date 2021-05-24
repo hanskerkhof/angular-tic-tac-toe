@@ -72,6 +72,7 @@ export class GameComponent extends BaseComponent implements OnInit, OnDestroy {
         this.gameService.currentGame$.pipe(
             takeUntil(this.destroyer$)
         ).subscribe(game => {
+            console.log('***** currentGame$', game);
             this.game = game;
             this.gameId = Object.keys(game)[0];
 

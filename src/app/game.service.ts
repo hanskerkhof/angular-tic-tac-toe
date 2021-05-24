@@ -28,6 +28,7 @@ export class GameService {
   games$ = this.socket.fromEvent<string[]>('games');
   disconnected$ = this.socket.fromEvent('disconnect');
   connect$ = this.socket.fromEvent('connect');
+
   getGame(gameId: string): void {
     this.socket.emit('getGame', gameId);
   }
