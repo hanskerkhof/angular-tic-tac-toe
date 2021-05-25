@@ -1,6 +1,6 @@
 {
   "name": "angular-tic-tac-toe",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "scripts": {
     "cy:open": "rimraf cypress/results/* && run-p -r start-http-server cy:open:wait",
     "cy:open:remote": "rimraf cypress/results/* && run-p -r start-http-server cy:open:wait:remote",
