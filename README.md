@@ -64,10 +64,16 @@ In postcss.config.js
 
 - https://github.com/ngneat/hot-toast
 - https://ngneat.github.io/hot-toast/#examples
+
 ## hot-toast
 
 https://ngneat.github.io/hot-toast/#examples
 
+## Confetti 🎉
+
+    npm i canvas-confetti
+
+https://www.npmjs.com/package/canvas-confetti
 
 ### Docker
 

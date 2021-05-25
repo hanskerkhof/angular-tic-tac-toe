@@ -1,9 +1,15 @@
-import {Component, OnInit, OnDestroy, HostListener} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {GameService} from '../game.service';
 import {HotToastService} from '@ngneat/hot-toast';
 import {BaseComponent} from "../base-component";
-import {filter, takeUntil, tap} from "rxjs/operators";
+import {filter, takeUntil} from "rxjs/operators";
 import {NoughtOrCrossPipe} from "../nought-or-cross.pipe";
+
+declare global {
+    interface Window {
+        confetti: any;
+    }
+}
 
 export interface Game {
     [key: string]: {
@@ -23,6 +29,7 @@ export type GameState = Array<Array<number>>
     templateUrl: './game.component.html',
     styleUrls: ['./game.component.scss']
 })
+
 export class GameComponent extends BaseComponent implements OnInit, OnDestroy {
     game!: Game;
     gameId!: string;
@@ -32,12 +39,13 @@ export class GameComponent extends BaseComponent implements OnInit, OnDestroy {
     constructor(
         private gameService: GameService,
         private toast: HotToastService,
-        private noughtOrCrossPipe: NoughtOrCrossPipe
+        private noughtOrCrossPipe: NoughtOrCrossPipe,
+        private window: Window
     ) {
         super();
     }
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         this.gameService.currentGame$
             .pipe(
                 takeUntil(this.destroyer$),
@@ -79,7 +87,7 @@ export class GameComponent extends BaseComponent implements OnInit, OnDestroy {
             if (this.game[this.gameId].winner) {
                 if (this.game[this.gameId].players.includes(this.currentPlayerName)) {
                     if (this.game[this.gameId].winner===this.currentPlayerName) {
-                        // if(self){
+                        this.blastConfetti(7);
                         this.toast.success(
                             `You win!`,
                             {
@@ -141,4 +149,33 @@ export class GameComponent extends BaseComponent implements OnInit, OnDestroy {
             icon: icon
         });
     }
+
+    public blastConfetti(times: number) {
+        const config = {
+            gravity: 1,
+            drift: 0,
+            particleCount: 150,
+            startVelocity: 30,
+            spread: 360,
+            shapes: ['circle']
+        }
+
+        let i = 1;
+        const confettiLoop = () => {
+            setTimeout(() => {
+                this.window.confetti({...config,
+                    origin: {
+                        x: Math.random(),
+                        y: Math.random() - 0.3
+                    }
+                });
+                i++;
+                if (i < times) {
+                    confettiLoop();
+                }
+            }, 150)
+        }
+        confettiLoop();
+    }
+
 }

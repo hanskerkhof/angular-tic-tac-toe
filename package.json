@@ -37,6 +37,7 @@
     "@ngneat/overview": "^1.0.0",
     "@ngneat/tailwind": "^7.0.3",
     "angular-cli-ghpages": "^1.0.0-rc.1",
+    "canvas-confetti": "^1.4.0",
     "ngx-socket-io": "^4.0.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.1.0",

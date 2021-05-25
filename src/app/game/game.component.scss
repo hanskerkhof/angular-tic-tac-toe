@@ -1,6 +1,7 @@
 $game-board-size: 220px;
 
 .game-area {
+  width: $game-board-size;
 }
 
 #winner {

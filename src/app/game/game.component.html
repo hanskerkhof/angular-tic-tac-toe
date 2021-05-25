@@ -18,10 +18,14 @@
         </button>
     </form>
 
-    <div class="players">
-        <label>Players: ({{game[gameId].players.length}})</label>
+    <div *ngIf="game[gameId].players.length > 0"
+         class="players bg-green-200 rounded-md p-1">
+        <label class="pb-2">Players: ({{game[gameId].players.length}})</label>
         <ul>
-            <li class="player" *ngFor="let playerName of game[gameId].players; let idx = index"
+            <li class="player rounded-md pl-2 mb-1"
+                [ngClass]="{'bg-blue-200': game[gameId].turn === playerName,
+                 'bg-gray-200-NOP': game[gameId].turn !== playerName}"
+                *ngFor="let playerName of game[gameId].players; let idx = index"
                 [attr.data-test]="'player-name-' + idx">
                 <span *ngIf="idx === 0">O</span> <span *ngIf="idx === 1">X</span> {{playerName}}
                 <span *ngIf="game[gameId].turn === playerName"> <-
@@ -32,7 +36,7 @@
         </ul>
     </div>
 
-    <div class="game-result">
+    <div class="game-result mt-2">
         <div id="winner" *ngIf="game[gameId].winner">
             <img *ngIf="game[gameId].players.indexOf(game[gameId].winner) === 0" src="assets/nought.png">
             <img *ngIf="game[gameId].players.indexOf(game[gameId].winner) === 1" src="assets/cross.png">
@@ -51,7 +55,7 @@
         <div *ngFor="let row of game[gameId].state; let x = index" class="game-row">
             <div *ngFor="let col of row; let y = index"
                  [attr.data-test]="x + '-' + y"
-                 class="tile"
+                 class="tile hover:bg-blue-200"
                  style="cursor: pointer"
                  (click)="playGame(x, y)"
                  [ngClass]="
@@ -59,13 +63,13 @@
                          'tile-bg-nought': col === -1,
                          'tile-bg-cross': col === 1
                          }">
-                <!--                        {{ col === 0 ? '' : (col === 1 ? 'O' : 'X') }}-->
             </div>
-
         </div>
-
     </div>
-    <div id="moves">{{ game[gameId].moves }} moves</div>
+
+    <div id="moves" class="bg-green-300 rounded-md pl-2">
+        {{ game[gameId].moves }} moves
+    </div>
 
     <div class="game-messages">
         <div *ngIf="game[gameId].players.length === 0">WAITING FOR PLAYERS TO JOIN</div>

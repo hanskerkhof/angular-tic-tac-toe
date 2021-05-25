@@ -34,7 +34,13 @@
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              {
+                "input": "./node_modules/canvas-confetti/dist/confetti.browser.js",
+                "inject": true,
+                "bundleName": "confetti"
+              }
+            ]
           },
           "configurations": {
             "production": {
