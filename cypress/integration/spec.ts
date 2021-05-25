@@ -58,7 +58,7 @@ beforeEach(() => {
         if (idx===0) {
             getIframeBody(gameId)
                 .find('[data-test=btn-new-game]')
-                .should('have.text', 'New Game')
+                .should('contain', 'New Game')
                 .click();
 
             getIframeBody(gameId)
@@ -82,7 +82,7 @@ beforeEach(() => {
         .should('contain', 'SPECTATING THE GAME');
 })
 
-it('Game win player one', () => {
+it('Should win player one', () => {
     play2PlayerScenario(['0-0', '0-1', '1-0', '1-1', '2-0']);
     getIframeBody('game-one').find('#winner').should('contain', 'game-one wins!');
     getIframeBody('game-one').find('#winner')
@@ -96,7 +96,7 @@ it('Game win player one', () => {
         .should('include', 'nought');
 });
 
-it('Game win player two', () => {
+it('Should win player two', () => {
     play2PlayerScenario(['0-1', '0-0', '2-1', '1-1', '2-0', '2-2']);
     getIframeBody('game-two').find('#winner').should('contain', 'game-two wins!');
     getIframeBody('game-one').find('#winner')
@@ -109,9 +109,38 @@ it('Game win player two', () => {
         .should('include', 'cross');
 });
 
-it('Game draw', () => {
+it('Should end in draw', () => {
     play2PlayerScenario(['0-0', '1-1', '0-1', '0-2', '2-0', '1-0', '1-2', '2-2', '2-1']);
     getIframeBody('game-one')
         .find('#draw')
         .should('contain', 'It\'s a draw!');
+});
+
+it('Should handle an unfinished game', () => {
+    play2PlayerScenario(['0-0', '1-1', '0-1', '1-0']);
+    // getIframeBody('game-one')
+    //     .find('#draw')
+    // .should('contain', 'It\'s a draw!');
+});
+
+it.skip('Should handle an not joined game', () => {
+    cy.viewport(1600, 900);
+    getIframeBody('game-one')
+        .find('[data-test=btn-new-game]')
+        .should('contain', 'New Game')
+        .click();
+
+    getIframeBody('game-one')
+        .find('.game-messages')
+        .should('contain', 'WAITING FOR PLAYERS TO JOIN');
+
+    getIframeBody('game-one')
+        .find('#playerName')
+        .clear()
+        .type('' + 'game-one');
+
+    getIframeBody('game-one')
+        .find('[data-test=btn-join-game]')
+        .should('contain', 'Join game')
+        .click();
 });

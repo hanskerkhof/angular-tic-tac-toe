@@ -1,13 +1,15 @@
 <div class="text-center">
     <button (click)='newGame()'
             class="btn mb-3"
-          data-test="btn-new-game">New Game</button>
+            data-test="btn-new-game">New Game
+    </button>
 
-    <div class="NOPbg-gray-500 cursor-pointer hover:bg-gray-200 text-center rounded-md p-1 m-1"
-            [class.bg-green-300]='gameId === currentGameId'
-         [ngClass]="{'hover:bg-green-500': gameId === currentGameId}"
-          (click)='loadGame(gameId)'
-          *ngFor='let gameId of games$ | async'>{{ gameId }}
+    <div data-test="game-history-list">
+        <div class="NOPbg-gray-500 cursor-pointer hover:bg-gray-200 text-center rounded-md p-1 m-1"
+             [class.bg-green-300]='gameId === currentGameId'
+             [ngClass]="{'hover:bg-green-500': gameId === currentGameId}"
+             (click)='loadGame(gameId)'
+             *ngFor='let gameId of games$ | async'>{{ gameId }}
+        </div>
     </div>
-
 </div>

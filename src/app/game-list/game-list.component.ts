@@ -4,6 +4,7 @@ import {GameService} from '../game.service';
 import {HotToastService} from "@ngneat/hot-toast";
 import {takeUntil} from "rxjs/operators";
 import {BaseComponent} from "../base-component";
+import {SoundService} from "../sound.service";
 
 @Component({
     selector: 'app-game-list',
@@ -17,7 +18,8 @@ export class GameListComponent extends BaseComponent implements OnInit, OnDestro
 
     constructor(
         private gameService: GameService,
-        private toast: HotToastService
+        private toast: HotToastService,
+        private sound: SoundService,
     ) {
         super();
         this.games$ = this.gameService.games$;
@@ -32,6 +34,7 @@ export class GameListComponent extends BaseComponent implements OnInit, OnDestro
 
     newGame(): void {
         this.gameService.newGame();
+        this.sound.playSound('create');
         this.toast.success('Game created');
     }
 

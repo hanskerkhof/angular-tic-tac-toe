@@ -79,7 +79,7 @@ io.on('connection', socket => {
 
     socket.on('addGame', () => {
         // generate a random string as id
-        const gameId = nanoid(9);
+        const gameId = nanoid(8);
         // start with empty players
         const players = [];
         // start with empty state
