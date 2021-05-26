@@ -59,9 +59,9 @@ export class GameComponent extends BaseComponent implements OnInit, OnDestroy {
             .subscribe((_game: Game) => {
                 const self = _game[Object.keys(_game)[0]].players.includes(this.currentPlayerName);
                 const msg = self ? 'Waiting for other player':'Waiting for you to join the game';
-                if (self) {
+                // if (!self) {
                     this.sound.playSound('knock');
-                }
+                // }
                 this.toastRef = this.toast.loading(msg, {
                     dismissible: true,
                     duration: 9999999999

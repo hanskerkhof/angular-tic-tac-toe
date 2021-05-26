@@ -1,10 +1,9 @@
 {
   "name": "backend",
-  "version": "1.0.3",
+  "version": "1.0.6",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
-    "start-mon": "npx nodemon bin/www --watch bin/www"
+    "start": "node ./bin/www"
   },
   "dependencies": {
     "@types/socket.io": "^3.0.2",
