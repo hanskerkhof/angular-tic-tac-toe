@@ -36,7 +36,6 @@ export class GameComponent extends BaseComponent implements OnInit, OnDestroy {
     game!: Game;
     gameId!: string;
     currentPlayerName: string = '';
-    toastRef: any;
 
     constructor(
         private gameService: GameService,
@@ -58,9 +57,7 @@ export class GameComponent extends BaseComponent implements OnInit, OnDestroy {
                 duration: 1000
             });
             this.gameId = '';
-            if (this.toastRef) {
-                this.toastRef.close();
-            }
+            this.gameService.cancelLoadingToast();
         });
 
         this.gameService.currentGame$
@@ -74,16 +71,16 @@ export class GameComponent extends BaseComponent implements OnInit, OnDestroy {
             )
             .subscribe((_game: Game) => {
                 const self = _game[Object.keys(_game)[0]].players.includes(this.currentPlayerName);
-                const msg = self ? 'Waiting for other player':'Waiting for you to join the game';
+
+                if (!self) {
+                    this.toast.success(`Player <strong>${_game[Object.keys(_game)[0]].players}</strong> started a new game ${Object.keys(_game)[0]}`);
+                }
+
                 // if (!self) {
                 this.sound.playSound('knock');
                 // }
-                this.toastRef = this.toast.loading(msg, {
-                    dismissible: true,
-                    duration: 9999999999,
-                    id: 'loading'
-                });
-                // console.log(this.toast);
+                const msg = self ? 'Waiting for other player':'Waiting for you to join the game';
+                this.gameService.showLoadingToast(msg);
             });
 
         this.gameService.currentGame$
@@ -97,7 +94,11 @@ export class GameComponent extends BaseComponent implements OnInit, OnDestroy {
                 // }),
             )
             .subscribe((game: Game) => {
-                this.toastRef.close();
+                if (this.game[this.gameId].players.indexOf(this.currentPlayerName)===0) {
+                    this.toast.success(`Player <strong>${game[Object.keys(game)[0]].players[1]}</strong> joined game ${this.gameId}`);
+                }
+
+                this.gameService.cancelLoadingToast();
                 this.sound.playSound('ready');
                 this.toast.success(`Game ready set go!`);
             });
@@ -183,7 +184,7 @@ export class GameComponent extends BaseComponent implements OnInit, OnDestroy {
 
         if (this.currentPlayerName) {
             this.gameService.joinGame(this.gameId, this.currentPlayerName);
-            this.toast.success(`Player <strong>${this.currentPlayerName}</strong> joined game ${this.gameId}`);
+            // this.toast.success(`Player <strong>${this.currentPlayerName}</strong> joined game ${this.gameId}`);
         }
     }
 
