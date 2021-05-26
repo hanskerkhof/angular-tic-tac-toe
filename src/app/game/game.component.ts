@@ -20,6 +20,7 @@ export interface Game {
         moves: number;
         winner: string;
         draw: boolean;
+        played: number;
     }
 }
 
@@ -47,31 +48,48 @@ export class GameComponent extends BaseComponent implements OnInit, OnDestroy {
         super();
     }
 
+
     public ngOnInit(): void {
+        this.gameService.reset$.subscribe(() => {
+            // console.log('***** reset!!');
+            this.toast.show(`Games reset`, {
+                icon: '💁🏻‍',
+                position: 'top-left',
+                duration: 1000
+            });
+            this.gameId = '';
+            if (this.toastRef) {
+                this.toastRef.close();
+            }
+        });
+
         this.gameService.currentGame$
             .pipe(
                 takeUntil(this.destroyer$),
+                filter((game) => game[Object.keys(game)[0]]),
                 filter((game) => game[Object.keys(game)[0]].players.length===1),
                 // tap((game: Game) => {
-                //     console.log('***** game', game[Object.keys(game)[0]].players);
+                //     console.log('***** game', game[Object.keys(game)[0]]);
                 // }),
             )
             .subscribe((_game: Game) => {
                 const self = _game[Object.keys(_game)[0]].players.includes(this.currentPlayerName);
                 const msg = self ? 'Waiting for other player':'Waiting for you to join the game';
                 // if (!self) {
-                    this.sound.playSound('knock');
+                this.sound.playSound('knock');
                 // }
                 this.toastRef = this.toast.loading(msg, {
                     dismissible: true,
-                    duration: 9999999999
+                    duration: 9999999999,
+                    id: 'loading'
                 });
-                console.log(this.toast);
+                // console.log(this.toast);
             });
 
         this.gameService.currentGame$
             .pipe(
                 takeUntil(this.destroyer$),
+                filter((game) => game[Object.keys(game)[0]]),
                 filter((game) => game[Object.keys(game)[0]].players.length===2),
                 filter((game) => game[Object.keys(game)[0]].moves===0),
                 // tap((game: Game) => {
@@ -85,11 +103,25 @@ export class GameComponent extends BaseComponent implements OnInit, OnDestroy {
             });
 
         this.gameService.currentGame$.pipe(
-            takeUntil(this.destroyer$)
+            takeUntil(this.destroyer$),
+            filter((game) => game[Object.keys(game)[0]]),
+            // tap((game: Game) => {
+            //     console.log('***** game', game[Object.keys(game)[0]]);
+            // }),
         ).subscribe(game => {
             // console.log('***** currentGame$', game);
             this.game = game;
             this.gameId = Object.keys(game)[0];
+
+            const self = game[Object.keys(game)[0]].players.includes(this.currentPlayerName);
+
+            if (self) {
+                if (this.game[this.gameId].played=== -1) {
+                    this.sound.playSound('playCross');
+                } else if (this.game[this.gameId].played===1) {
+                    this.sound.playSound('playNought');
+                }
+            }
 
             setTimeout(() => {
                 if (this.game[this.gameId].winner) {
@@ -123,7 +155,7 @@ export class GameComponent extends BaseComponent implements OnInit, OnDestroy {
 
                     }
                 }
-            }, 300);
+            }, 600);
 
             if (this.game[this.gameId].draw) {
                 this.sound.playSound('draw');
@@ -139,7 +171,7 @@ export class GameComponent extends BaseComponent implements OnInit, OnDestroy {
             // console.log('PLAYER NAME ALREADY TAKEN');
             return;
         }
-        localStorage.setItem('playerName', event.target.value);
+        // localStorage.setItem('playerName', event.target.value);
         this.currentPlayerName = event.target.value;
     }
 
@@ -158,15 +190,11 @@ export class GameComponent extends BaseComponent implements OnInit, OnDestroy {
     playGame(x: number, y: number): void {
         setTimeout(() => {
             this.gameService.playGame(this.gameId, this.currentPlayerName, x, y);
-            const icon = this.noughtOrCrossPipe.transform(this.game[this.gameId].players.indexOf(this.currentPlayerName));
             if (this.game[this.gameId].players.indexOf(this.currentPlayerName)===0) {
                 this.sound.playSound('playNought');
             } else {
                 this.sound.playSound('playCross');
             }
-            this.toast.show(`Plays @ ${x},${y}`, {
-                icon: icon
-            });
         }, 300);
     }
 

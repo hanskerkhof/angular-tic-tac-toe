@@ -28,7 +28,7 @@ export class AppComponent extends BaseComponent {
             // console.log(res);
             this.sound.playSound('disconnect');
             this.connected = false;
-            this.toast.error('Socket disconnected');
+            this.toast.error('Socket disconnected', { icon: '💔'});
 
         })
 
@@ -37,7 +37,7 @@ export class AppComponent extends BaseComponent {
         ).subscribe(() => {
             this.connected = true;
             this.sound.playSound('connect');
-            this.toast.success('Socket connected');
+            this.toast.success('Socket connected', {icon: '🖖'});
         })
 
     }

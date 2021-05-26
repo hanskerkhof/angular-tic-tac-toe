@@ -32,7 +32,8 @@ const play2PlayerScenario = (scenario) => {
         getIframeBody(gamesId[idx % 2])
             .find('[data-test=' + tile + ']')
             .should('have.css', 'background')
-            .and('include', 'data:image/svg+xml;base64')
+            .and('include', 'data:image/svg+xml;base64');
+        cy.wait(300);
     });
     getIframeBody('game-one').find('#moves').should('contain', scenario.length);
     getIframeBody('game-two').find('#moves').should('contain', scenario.length);
@@ -94,6 +95,7 @@ it('Should win player one', () => {
         .find('img')
         .should('have.attr', 'src')
         .should('include', 'nought');
+    cy.wait(600);
 });
 
 it('Should win player two', () => {
@@ -107,6 +109,7 @@ it('Should win player two', () => {
         .find('img')
         .should('have.attr', 'src')
         .should('include', 'cross');
+    cy.wait(600);
 });
 
 it('Should end in draw', () => {
@@ -114,6 +117,7 @@ it('Should end in draw', () => {
     getIframeBody('game-one')
         .find('#draw')
         .should('contain', 'It\'s a draw!');
+    cy.wait(600);
 });
 
 it('Should handle an unfinished game', () => {
@@ -121,6 +125,7 @@ it('Should handle an unfinished game', () => {
     // getIframeBody('game-one')
     //     .find('#draw')
     // .should('contain', 'It\'s a draw!');
+    cy.wait(600);
 });
 
 it.skip('Should handle an not joined game', () => {
@@ -143,4 +148,5 @@ it.skip('Should handle an not joined game', () => {
         .find('[data-test=btn-join-game]')
         .should('contain', 'Join game')
         .click();
+    cy.wait(600);
 });

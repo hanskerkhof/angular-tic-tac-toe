@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {catchError} from "rxjs/operators";
 
 export interface Sounds {
     connect: HTMLAudioElement;
@@ -54,6 +55,8 @@ export class SoundService {
         this.soundFx.src = this.soundFxNames[soundName];
         this.soundFx.play().then(() => {
             console.log(`soundFx ${soundName} played!`);
+        }).catch((err)=> {
+            console.log('err', err);
         });
         // this.sounds[soundName].play().then(() => {
         //     console.log(`sound ${soundName} played!`);

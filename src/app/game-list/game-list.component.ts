@@ -42,4 +42,8 @@ export class GameListComponent extends BaseComponent implements OnInit, OnDestro
         this.gameService.getGame(gameId);
     }
 
+    clearGames() {
+        this.gameService.clearGames();
+    }
+
 }

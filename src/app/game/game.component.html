@@ -1,4 +1,4 @@
-<div *ngIf="game" class="game-area mt-4">
+<div *ngIf="gameId" class="game-area mt-4">
     <form data-test="player-name-form"
           *ngIf="!game[gameId].players.includes(currentPlayerName) && game[gameId].players.length < 2">
         <label for="playerName">Enter your name: </label>
@@ -78,5 +78,5 @@
             THE GAME
         </div>
     </div>
-    <!--    <pre id="debug">{{game | json}}</pre>-->
+<!--        <pre id="debug">{{game | json}}</pre>-->
 </div>

@@ -26,8 +26,13 @@ export class GameService {
 
   currentGame$ = this.socket.fromEvent<any>('game');
   games$ = this.socket.fromEvent<string[]>('games');
+  reset$ = this.socket.fromEvent<string[]>('reset');
   disconnected$ = this.socket.fromEvent('disconnect');
   connect$ = this.socket.fromEvent('connect');
+
+  clearGames(): void {
+    this.socket.emit('clearGames');
+  }
 
   getGame(gameId: string): void {
     this.socket.emit('getGame', gameId);
@@ -46,4 +51,5 @@ export class GameService {
     // console.log('playGame', gameId, playerName, x, y);
     this.socket.emit('playGame', {gameId, playerName, x, y});
   }
+
 }
