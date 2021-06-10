@@ -41,6 +41,42 @@ const play2PlayerScenario = (scenario) => {
 }
 
 before(() => {
+    // cy.readFile('cypress/fixtures/tic-tac-toe copy.data.txt', 'latin1').then((txt) => {
+    //     // console.log(txt);
+    //     const lines = txt.split('\n');
+    //     // console.log(lines);
+    //     lines.forEach((line: string) => {
+    //         const scenarios: any = [];
+    //         const moves: any = [];
+    //         if (line) {
+    //             console.log('line', line);
+    //             const s = line.split(',');
+    //             // console.log(s);
+    //             let x = 0;
+    //             let y = 0;
+    //             let start: any = null;
+    //             const scenario: any = [];
+    //             s.forEach((tile, idx) => {
+    //                 // console.log('tile', tile);
+    //                 if(tile !== 'b' && tile !== 'negative' && tile !== 'positive'){
+    //                     if(!start){ start = tile; }
+    //                     if(idx >= 4 ) { x = 1; y = 0;}
+    //                     if(idx >= 7 ) { x = 2; y = 0;}
+    //                     // console.log('start', start);
+    //                     moves.push(`${x}-${y++}`);
+    //                 }
+    //             })
+    //             console.log('start', start);
+    //             scenario.push({ start: start, moves: moves});
+    //             console.log('scenario', scenario);
+    //             scenarios.push(scenario);
+    //         }
+    //     });
+    //     // logo will be encoded as base64
+    //     // and should look something like this:
+    //     // aIJKnwxydrB10NVWqhlmmC+ZiWs7otHotSAAAOw==...
+    // });
+
     if (Cypress.env('env')==='remote') {
         Cypress.config({
             defaultCommandTimeout: 10000,
@@ -128,7 +164,7 @@ it('Should handle an unfinished game', () => {
     cy.wait(600);
 });
 
-it.skip('Should handle an not joined game', () => {
+it('Should handle an not joined game', () => {
     cy.viewport(1600, 900);
     getIframeBody('game-one')
         .find('[data-test=btn-new-game]')
