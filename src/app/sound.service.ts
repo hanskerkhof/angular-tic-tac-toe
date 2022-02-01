@@ -52,14 +52,14 @@ export class SoundService {
     }
 
     playSound(soundName: SoundNames) {
-        this.soundFx.src = this.soundFxNames[soundName];
-        this.soundFx.play().then(() => {
-            console.log(`soundFx ${soundName} played!`);
-        }).catch((err)=> {
-            console.log('err', err);
-        });
-        // this.sounds[soundName].play().then(() => {
-        //     console.log(`sound ${soundName} played!`);
+        // this.soundFx.src = this.soundFxNames[soundName];
+        // this.soundFx.play().then(() => {
+        //     console.log(`soundFx ${soundName} played!`);
+        // }).catch((err)=> {
+        //     console.log('err', err);
         // });
+        // // this.sounds[soundName].play().then(() => {
+        // //     console.log(`sound ${soundName} played!`);
+        // // });
     }
 }
